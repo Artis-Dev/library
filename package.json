@@ -1,0 +1,25 @@
+{
+  "name": "library",
+  "version": "1.0.0",
+  "description": "Project to create small Library app using only HTML, CSS and Vanilla JS.",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Artis-Dev/library.git"
+  },
+  "author": "ArtisDev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Artis-Dev/library/issues"
+  },
+  "homepage": "https://github.com/Artis-Dev/library#readme"
+}
