@@ -1,3 +1,27 @@
 body {
   background-color: mintcream;
+  width: 1400px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 48px;
+  text-align: center;
+}
+
+#main-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.card {
+  margin: 0 20px 20px 0;
+  height: 300px;
+  width: 264px;
+  border: solid 1px black;
+}
+.card:nth-child(5n+5) {
+  margin-right: 0;
 }
