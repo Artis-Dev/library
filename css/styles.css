@@ -1,10 +1,11 @@
 body {
-  background-color: mintcream;
-  width: 1400px;
+  background-color: #F4F1DE;
+  font-family: 'Open Sans', sans-serif;
+  width: 1440px;
   margin: 0 auto;
 }
 
-h1 {
+header h1 {
   font-family: 'Fraunces', serif;
   font-size: 48px;
   text-align: center;
@@ -16,12 +17,38 @@ h1 {
   flex-wrap: wrap;
 }
 
+/* Card styling */
 .card {
-  margin: 0 20px 20px 0;
-  height: 300px;
-  width: 264px;
-  border: solid 1px black;
+  margin: 0 10px 10px 0;
+  padding: 0 20px 10px;
+  min-height: 170px;
+  width: 280px;
+  border-radius: 5px;
+  background-color: #F2CC8F;
+  box-shadow: inset rgba(0,0,0,.11) 0 0 0 1px;
+  color: #3C3744;
 }
-.card:nth-child(5n+5) {
+.card:nth-child(5n) {
   margin-right: 0;
+}
+.card h2 {
+  font-family: 'Fraunces', serif;
+  margin: 20px 0 5px;
+}
+.card p {
+  margin: 0 0 20px;
+}
+.card .author {
+  font-style: italic;
+}
+.card .sep {
+  border-bottom: solid 1px rgba(0,0,0,.11);
+  margin-bottom: 20px;
+}
+.card .details {
+  font-size: 14px;
+  margin-bottom: 10px !important;
+}
+.card .bold {
+  font-weight: 700;
 }
