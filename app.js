@@ -1,4 +1,4 @@
-const mainContainer = document.getElementById('main-container');
+const mainContainer = document.getElementById('books-container');
 
 const myLibrary = [];
 
@@ -14,45 +14,54 @@ function showBooks() {
   for (let i = 0; i < myLibrary.length; i += 1) {
     // Create book card
     const divCard = document.createElement('div');
-    mainContainer.appendChild(divCard);
     divCard.classList.add('card');
+    mainContainer.appendChild(divCard);
     // Create book title
     const h2Title = document.createElement('h2');
-    divCard.appendChild(h2Title);
     h2Title.textContent = myLibrary[i].title;
+    divCard.appendChild(h2Title);
     // Create book author
     const pAuthor = document.createElement('p');
-    divCard.appendChild(pAuthor);
     pAuthor.textContent = 'by ';
+    divCard.appendChild(pAuthor);
     const spanAuthor = document.createElement('span');
-    pAuthor.appendChild(spanAuthor);
     spanAuthor.classList.add('author');
     spanAuthor.textContent = myLibrary[i].author;
+    pAuthor.appendChild(spanAuthor);
     // Create seperator
     const divSep = document.createElement('div');
-    divCard.appendChild(divSep);
     divSep.classList.add('sep');
+    divCard.appendChild(divSep);
     // Create book length
     const pLength = document.createElement('p');
-    divCard.appendChild(pLength);
     pLength.classList.add('details');
+    divCard.appendChild(pLength);
     const spanLength = document.createElement('span');
-    pLength.appendChild(spanLength);
     spanLength.classList.add('bold');
     spanLength.textContent = 'Length: ';
-    const textLength = document.createTextNode(myLibrary[i].pages);
+    pLength.appendChild(spanLength);
+    const textLength = document.createTextNode(`${myLibrary[i].pages} pages`);
     pLength.appendChild(textLength);
     // Create book status
     const pStatus = document.createElement('p');
-    divCard.appendChild(pStatus);
     pStatus.classList.add('details');
+    divCard.appendChild(pStatus);
     const spanStatus = document.createElement('span');
-    pStatus.appendChild(spanStatus);
     spanStatus.classList.add('bold');
     spanStatus.textContent = 'Status: ';
+    pStatus.appendChild(spanStatus);
     const textStatus = document.createTextNode(myLibrary[i].read);
     pStatus.appendChild(textStatus);
   }
+  // Create add new book card
+  const divCard = document.createElement('div');
+  divCard.classList.add('card', 'add-new');
+  mainContainer.appendChild(divCard);
+  // Create add new book button
+  const buttonAddBook = document.createElement('button');
+  buttonAddBook.id = 'add-book-modal';
+  buttonAddBook.textContent = 'New book';
+  divCard.appendChild(buttonAddBook);
 }
 
 function addBookToLibrary(title, author, pages, read) {
@@ -66,8 +75,34 @@ function addBookToLibrary(title, author, pages, read) {
   return `Book '${newBook.title}' has been added to the library.`;
 }
 
+function modalListeners() {
+  const modal = document.getElementById('new-book-modal');
+  const addBookButton = document.getElementById('add-book-modal');
+  const closeButtons = document.getElementsByClassName('close');
+
+  addBookButton.addEventListener('click', () => {
+    modal.style.display = 'block';
+  });
+  Array.from(closeButtons).forEach((button) => {
+    button.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+  });
+  window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+  document.addEventListener('keyup', (event) => {
+    if (event.key === 'Escape') {
+      modal.style.display = 'none';
+    }
+  });
+}
+
 addBookToLibrary('The Last Wish', 'Andrzej Sapkowski', '288', 'READ');
 addBookToLibrary('Sword of Destiny', 'Andrzej Sapkowski', '384', 'READ');
 addBookToLibrary('Blood of Elves', 'Andrzej Sapkowski', '320', 'NOT READ');
 
 showBooks();
+modalListeners();

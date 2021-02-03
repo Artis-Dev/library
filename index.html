@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/modern-normalize.min.css">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces&family=Open+Sans:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces&family=Poppins:ital,wght@0,400;0,600;1,400&display=swap">
 </head>
 <body>
 
@@ -15,19 +15,73 @@
     <h1>Library</h1>
   </header>
 
-  <main id="main-container">
-    <!-- <div class="card">
-      <h2>The Last Wish</h2>
-      <p>by <span class="author">Andrzej Sapkowski</span></p>
-      <div class="sep"></div>
-      <p class="details"><b>Length:</b> 288 pages</p>
-      <p class="details"><b>Status:</b> DONE <a href="#">change</a></p>
-    </div> -->
+  <main>
+
+    <div id="books-container">
+      <!-- <div class="card">
+        <h2>The Last Wish</h2>
+        <p>by <span class="author">Andrzej Sapkowski</span></p>
+        <div class="sep"></div>
+        <p class="details"><b>Length:</b> 288 pages</p>
+        <p class="details"><b>Status:</b> DONE <a href="#">change</a></p>
+      </div> -->
+      <!-- <div class="card add-new">
+        <button>New book</button>
+      </div> -->
+    </div>
+
+    <!-- Modal -->
+    <div id="new-book-modal" class="modal">
+      <div class="modal-content">
+
+        <span class="close close-x">&times;</span>
+
+        <h2>Add new book</h2>
+
+        <div class="sep"></div>
+
+        <div id="new-book-form">
+
+          <form>
+
+            <div>
+              <label for="form-book-title">Book title</label><br>
+              <input type="text" id="form-book-title" name="book-title" placeholder="e.g. The Lord of the Rings" required>
+            </div>
+
+            <div>
+              <label for="form-book-author">Book author</label><br>
+              <input type="text" id="form-book-author" name="book-author" placeholder="e.g. J. R. R. Tolkien" required>
+            </div>
+
+            <div>
+              <label for="form-book-pages">Number of pages</label><br>
+              <input type="number" id="form-book-pages" name="book-pages" min="1" max="10000" required>
+            </div>
+
+            <div>
+              <input type="checkbox" id="form-book-status" value="status">
+              <label for="form-book-status">I have read this book</label>
+            </div>
+
+            <div class="sep"></div>
+
+            <div class="button-right">
+              <button class="close cancel" href="#">Cancel</button><button id="form-add-book" type="submit">Add book</button>
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+    <!-- /Modal -->
   </main>
 
   <footer></footer>
 
-
   <script src="app.js"></script>
+
 </body>
 </html>
