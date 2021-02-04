@@ -18,10 +18,10 @@ function showBooks() {
     mainContainer.appendChild(divCard);
     // Create delete icon
     const spanDelete = document.createElement('span');
-    spanDelete.classList.add('delete-x');
+    spanDelete.classList.add('delete');
     divCard.appendChild(spanDelete);
     const iDelete = document.createElement('i');
-    iDelete.classList.add('fas', 'fa-times');
+    iDelete.classList.add('fas', 'fa-trash-alt');
     spanDelete.appendChild(iDelete);
     // Create book title
     const h2Title = document.createElement('h2');
@@ -57,7 +57,7 @@ function showBooks() {
     spanStatus.classList.add('bold');
     spanStatus.textContent = 'Status: ';
     pStatus.appendChild(spanStatus);
-    const textStatus = document.createTextNode(myLibrary[i].read);
+    const textStatus = document.createTextNode((myLibrary[i].read) ? 'Done' : 'In progress');
     pStatus.appendChild(textStatus);
     const iChangeStatus = document.createElement('i');
     iChangeStatus.classList.add('fas', 'fa-sync-alt', 'change-status');
@@ -109,9 +109,9 @@ function modalListeners() {
   });
 }
 
-addBookToLibrary('The Last Wish', 'Andrzej Sapkowski', '288', 'Done');
-addBookToLibrary('Sword of Destiny', 'Andrzej Sapkowski', '384', 'Done');
-addBookToLibrary('Blood of Elves', 'Andrzej Sapkowski', '320', 'In progress');
+addBookToLibrary('The Last Wish', 'Andrzej Sapkowski', '288', true);
+addBookToLibrary('Sword of Destiny', 'Andrzej Sapkowski', '384', true);
+addBookToLibrary('Blood of Elves', 'Andrzej Sapkowski', '320', false);
 
 showBooks();
 modalListeners();
