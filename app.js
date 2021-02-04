@@ -16,6 +16,13 @@ function showBooks() {
     const divCard = document.createElement('div');
     divCard.classList.add('card');
     mainContainer.appendChild(divCard);
+    // Create delete icon
+    const spanDelete = document.createElement('span');
+    spanDelete.classList.add('delete-x');
+    divCard.appendChild(spanDelete);
+    const iDelete = document.createElement('i');
+    iDelete.classList.add('fas', 'fa-times');
+    spanDelete.appendChild(iDelete);
     // Create book title
     const h2Title = document.createElement('h2');
     h2Title.textContent = myLibrary[i].title;
@@ -52,16 +59,18 @@ function showBooks() {
     pStatus.appendChild(spanStatus);
     const textStatus = document.createTextNode(myLibrary[i].read);
     pStatus.appendChild(textStatus);
+    const iChangeStatus = document.createElement('i');
+    iChangeStatus.classList.add('fas', 'fa-sync-alt', 'change-status');
+    pStatus.appendChild(iChangeStatus);
   }
   // Create add new book card
   const divCard = document.createElement('div');
   divCard.classList.add('card', 'add-new');
   mainContainer.appendChild(divCard);
   // Create add new book button
-  const buttonAddBook = document.createElement('button');
-  buttonAddBook.id = 'add-book-modal';
-  buttonAddBook.textContent = 'New book';
-  divCard.appendChild(buttonAddBook);
+  const iAddBook = document.createElement('i');
+  iAddBook.classList.add('fas', 'fa-plus', 'add-book-modal');
+  divCard.appendChild(iAddBook);
 }
 
 function addBookToLibrary(title, author, pages, read) {
@@ -76,8 +85,8 @@ function addBookToLibrary(title, author, pages, read) {
 }
 
 function modalListeners() {
+  const addBookButton = document.querySelector('.add-book-modal');
   const modal = document.getElementById('new-book-modal');
-  const addBookButton = document.getElementById('add-book-modal');
   const closeButtons = document.getElementsByClassName('close');
 
   addBookButton.addEventListener('click', () => {
@@ -100,9 +109,9 @@ function modalListeners() {
   });
 }
 
-addBookToLibrary('The Last Wish', 'Andrzej Sapkowski', '288', 'READ');
-addBookToLibrary('Sword of Destiny', 'Andrzej Sapkowski', '384', 'READ');
-addBookToLibrary('Blood of Elves', 'Andrzej Sapkowski', '320', 'NOT READ');
+addBookToLibrary('The Last Wish', 'Andrzej Sapkowski', '288', 'Done');
+addBookToLibrary('Sword of Destiny', 'Andrzej Sapkowski', '384', 'Done');
+addBookToLibrary('Blood of Elves', 'Andrzej Sapkowski', '320', 'In progress');
 
 showBooks();
 modalListeners();
