@@ -33,25 +33,28 @@
 
         <div id="new-book-form">
 
-          <form>
+          <form id="add-book-form" name="add-book-form" method="POST">
 
             <div>
-              <label for="form-book-title">Book title</label><br>
-              <input type="text" id="form-book-title" name="book-title" placeholder="e.g. The Lord of the Rings" required>
+              <label for="form-book-title">Book title<span class="red">*</span></label><br>
+              <input type="text" id="form-book-title" name="book-title" autocomplete="off" placeholder="e.g. The Lord of the Rings" required>
+              <p class="title-error">This field can't be empty.</p>
             </div>
 
             <div>
-              <label for="form-book-author">Book author</label><br>
-              <input type="text" id="form-book-author" name="book-author" placeholder="e.g. J. R. R. Tolkien" required>
+              <label for="form-book-author">Book author<span class="red">*</span></label><br>
+              <input type="text" id="form-book-author" name="book-author" autocomplete="off" placeholder="e.g. J. R. R. Tolkien" required>
+              <p class="author-error">This field can't be empty.</p>
             </div>
 
             <div>
-              <label for="form-book-pages">Number of pages</label><br>
-              <input type="number" id="form-book-pages" name="book-pages" min="1" max="10000" required>
+              <label for="form-book-pages">Number of pages<span class="red">*</span></label><br>
+              <input type="number" id="form-book-pages" name="book-pages" autocomplete="off" min="1" max="9999" required>
+              <p class="pages-error">This field can't be empty, must be a number between 1 and 10000.</p>
             </div>
 
             <div>
-              <input type="checkbox" id="form-book-status" value="status">
+              <input type="checkbox" id="form-book-status"name="book-status" autocomplete="off">
               <label for="form-book-status">I have read this book</label>
             </div>
 
