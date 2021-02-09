@@ -182,6 +182,16 @@ header h1 {
   color: #3C3744;
 }
 
+/* Remove arrows from number input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .red {
   color: #D56062;
 }
