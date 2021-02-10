@@ -163,4 +163,3 @@ addBookToLibrary('Blood of Elves', 'Andrzej Sapkowski', '320', false);
 
 showBooks();
 modalListeners();
-removeBookFromLibrary();
