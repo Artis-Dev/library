@@ -242,7 +242,6 @@ input[type=number] {
 }
 
 /* Checkbox styling */
-
 .checkbox {
   display: grid;
   grid-template-columns: min-content auto;
@@ -257,6 +256,7 @@ input[type=number] {
 
 .checkbox-control {
   display: inline-grid;
+  align-self: center;
   width: 1em;
   height: 1em;
   border-radius: 2px;

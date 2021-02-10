@@ -87,8 +87,20 @@ function removeBookFromLibrary(event) {
   if (event.target.className === 'delete fas fa-trash-alt') {
     const index = event.target.parentElement.getAttribute('data-index');
     myLibrary.splice(index, 1);
+    showBooks();
   }
-  showBooks();
+}
+
+function changeBookStatus(event) {
+  if (event.target.className === 'fas fa-sync-alt change-status') {
+    const index = event.target.parentElement.parentElement.getAttribute('data-index');
+    if (myLibrary[index].status === true) {
+      myLibrary[index].status = false;
+    } else {
+      myLibrary[index].status = true;
+    }
+    showBooks();
+  }
 }
 
 function formValidation(event) {
@@ -154,6 +166,10 @@ function modalListeners() {
   // Remove book button
   document.addEventListener('click', (event) => {
     removeBookFromLibrary(event);
+  });
+  // Change book status
+  document.addEventListener('click', (event) => {
+    changeBookStatus(event);
   });
 }
 
