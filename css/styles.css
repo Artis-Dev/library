@@ -69,6 +69,16 @@ header h1 {
   font-weight: 600;
 }
 
+.card .in-progress {
+  color: #D56062;
+  font-weight: 600;
+}
+
+.card .done {
+  color: #519E8A;
+  font-weight: 600;
+}
+
 .card .change-status {
   margin-left: 5px;
   cursor: pointer;
@@ -182,6 +192,13 @@ header h1 {
   color: #3C3744;
 }
 
+#form-book-title:focus,
+#form-book-author:focus,
+#form-book-pages:focus {
+  border-color: #3C3744;
+  outline: none;
+}
+
 /* Remove arrows from number input */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -283,5 +300,6 @@ input[type=number] {
 
 .checkbox-input input:focus
  + .checkbox-control {
-  outline: 1px dotted;
+  /* outline: 1px dotted; */
+  border-color: #3C3744;
 }

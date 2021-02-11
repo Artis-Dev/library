@@ -64,8 +64,11 @@ function showBooks() {
     spanStatus.classList.add('bold');
     spanStatus.textContent = 'Status: ';
     pStatus.appendChild(spanStatus);
+    const spanStatusText = document.createElement('span');
+    pStatus.appendChild(spanStatusText);
     const textStatus = document.createTextNode((myLibrary[i].status) ? 'Done' : 'In progress');
-    pStatus.appendChild(textStatus);
+    spanStatusText.classList.add((myLibrary[i].status) ? 'done' : 'in-progress');
+    spanStatusText.appendChild(textStatus);
     const iChangeStatus = document.createElement('i');
     iChangeStatus.classList.add('fas', 'fa-sync-alt', 'change-status');
     pStatus.appendChild(iChangeStatus);
@@ -144,7 +147,7 @@ function formValidation(event) {
   }
 }
 
-function modalListeners() {
+function buttonsListeners() {
   const addBook = document.querySelector('#form-add-book');
   const closeButtons = document.querySelectorAll('.close');
 
@@ -187,4 +190,4 @@ function modalListeners() {
 // ddBookToLibrary('Blood of Elves', 'Andrzej Sapkowski', '320', false);
 
 showBooks();
-modalListeners();
+buttonsListeners();
