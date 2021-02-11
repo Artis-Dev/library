@@ -3,7 +3,15 @@ const modal = document.querySelector('#new-book-modal');
 
 function Book() {}
 
-const myLibrary = [];
+let myLibrary = [];
+
+// Local storage
+if (localStorage.getItem('books') === null) {
+  myLibrary = [];
+} else {
+  const booksStringFromStorage = localStorage.getItem('books');
+  myLibrary = JSON.parse(booksStringFromStorage);
+}
 
 // eslint-disable-next-line func-names
 Book.prototype.info = function () {
@@ -70,6 +78,7 @@ function showBooks() {
   const iAddBook = document.createElement('i');
   iAddBook.classList.add('fas', 'fa-plus', 'add-book-modal');
   divCard.appendChild(iAddBook);
+  localStorage.setItem('books', JSON.stringify(myLibrary));
 }
 
 function addBookToLibrary(title, author, pages, status) {
@@ -173,9 +182,9 @@ function modalListeners() {
   });
 }
 
-addBookToLibrary('The Last Wish', 'Andrzej Sapkowski', '288', true);
-addBookToLibrary('Sword of Destiny', 'Andrzej Sapkowski', '384', true);
-addBookToLibrary('Blood of Elves', 'Andrzej Sapkowski', '320', false);
+// addBookToLibrary('The Last Wish', 'Andrzej Sapkowski', '288', true);
+// addBookToLibrary('Sword of Destiny', 'Andrzej Sapkowski', '384', true);
+// ddBookToLibrary('Blood of Elves', 'Andrzej Sapkowski', '320', false);
 
 showBooks();
 modalListeners();
