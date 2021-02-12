@@ -1,7 +1,7 @@
-const mainContainer = document.querySelector('#books-container');
+const booksContainer = document.querySelector('#books-container');
 const modal = document.querySelector('#new-book-modal');
 
-function Book() {}
+function Book() { }
 
 let myLibrary = [];
 
@@ -19,13 +19,38 @@ Book.prototype.info = function () {
 };
 
 function showBooks() {
-  mainContainer.textContent = '';
+  booksContainer.textContent = '';
+  let readBooksCount = 0;
+  let unreadBooksCount = 0;
+  let readBooksPercent = 0;
+  let unreadBooksPercent = 0;
+  // Stats
+  const totalBooks = document.querySelector('.total-books');
+  const readBooks = document.querySelector('.read-books');
+  const unreadBooks = document.querySelector('.unread-books');
+  readBooks.textContent = `${readBooksCount} (0%)`;
+  unreadBooks.textContent = `${unreadBooksCount} (0%)`;
+  // Total book stats
+  totalBooks.textContent = myLibrary.length;
   for (let i = 0; i < myLibrary.length; i += 1) {
+    // Read book stats
+    if (myLibrary[i].status === true) {
+      readBooksCount += 1;
+      readBooksPercent = Math.floor((readBooksCount / myLibrary.length) * 100);
+      readBooks.textContent = `${readBooksCount} (${readBooksPercent}%)`;
+    }
+
+    // Unread book stats
+    if (myLibrary[i].status === false) {
+      unreadBooksCount += 1;
+      unreadBooksPercent = Math.floor((unreadBooksCount / myLibrary.length) * 100);
+      unreadBooks.textContent = `${unreadBooksCount} (${unreadBooksPercent}%)`;
+    }
     // Create book card
     const divCard = document.createElement('div');
     divCard.classList.add('card');
     divCard.setAttribute('data-index', i);
-    mainContainer.appendChild(divCard);
+    booksContainer.appendChild(divCard);
     // Create delete icon
     const iDelete = document.createElement('i');
     iDelete.classList.add('delete', 'fas', 'fa-trash-alt');
@@ -76,7 +101,7 @@ function showBooks() {
   // Create add new book card
   const divCard = document.createElement('div');
   divCard.classList.add('card', 'add-new');
-  mainContainer.appendChild(divCard);
+  booksContainer.appendChild(divCard);
   // Create add new book button
   const iAddBook = document.createElement('i');
   iAddBook.classList.add('fas', 'fa-plus', 'add-book-modal');
@@ -115,7 +140,21 @@ function changeBookStatus(event) {
   }
 }
 
-function formValidation(event) {
+function addDemoData() {
+  addBookToLibrary('The Last Wish', 'Andrzej Sapkowski', '288', true);
+  addBookToLibrary('Sword of Destiny', 'Andrzej Sapkowski', '384', true);
+  addBookToLibrary('Blood of Elves', 'Andrzej Sapkowski', '320', false);
+}
+
+function clearData() {
+  const confirmAnswer = confirm('Do you realy want to clear all books?');
+  if (confirmAnswer) {
+    myLibrary = [];
+    showBooks();
+  }
+}
+
+function formValidation() {
   const form = document.querySelector('#add-book-form');
   const titleError = document.querySelector('.title-error');
   const authorError = document.querySelector('.author-error');
@@ -124,7 +163,6 @@ function formValidation(event) {
   const bookAuthor = document.forms['add-book-form']['book-author'].value;
   const bookPages = document.forms['add-book-form']['book-pages'].value;
   const bookStatus = document.forms['add-book-form']['book-status'].checked;
-  event.preventDefault();
   if (bookTitle !== '' && bookAuthor !== '' && +bookPages > 0 && +bookPages < 10000) {
     addBookToLibrary(bookTitle, bookAuthor, bookPages, bookStatus);
     modal.style.display = 'none';
@@ -150,10 +188,12 @@ function formValidation(event) {
 function buttonsListeners() {
   const addBook = document.querySelector('#form-add-book');
   const closeButtons = document.querySelectorAll('.close');
+  const demoButton = document.querySelector('.demo-button');
+  const clearButton = document.querySelector('.clear-button');
 
   // Open/close modal
   document.addEventListener('click', (event) => {
-    if (event.target.className === 'fas fa-plus add-book-modal') {
+    if (event.target.className === 'card add-new' || event.target.className === 'fas fa-plus add-book-modal') {
       modal.style.display = 'block';
     } else if (event.target === modal) {
       modal.style.display = 'none';
@@ -165,15 +205,19 @@ function buttonsListeners() {
       modal.style.display = 'none';
     });
   });
-  // Close modal with escape key
+  // Close/submit modal with escape/enter keys
   document.addEventListener('keyup', (event) => {
     if (event.key === 'Escape') {
       modal.style.display = 'none';
     }
+    if (event.key === 'Enter' && modal.style.display === 'block') {
+      formValidation(event);
+    }
   });
   // Add book button
   addBook.addEventListener('click', (event) => {
-    formValidation(event);
+    event.preventDefault();
+    formValidation();
   });
   // Remove book button
   document.addEventListener('click', (event) => {
@@ -183,11 +227,15 @@ function buttonsListeners() {
   document.addEventListener('click', (event) => {
     changeBookStatus(event);
   });
+  // Add demo data
+  demoButton.addEventListener('click', () => {
+    addDemoData();
+  });
+  // Clear data button
+  clearButton.addEventListener('click', () => {
+    clearData();
+  });
 }
-
-// addBookToLibrary('The Last Wish', 'Andrzej Sapkowski', '288', true);
-// addBookToLibrary('Sword of Destiny', 'Andrzej Sapkowski', '384', true);
-// ddBookToLibrary('Blood of Elves', 'Andrzej Sapkowski', '320', false);
 
 showBooks();
 buttonsListeners();
