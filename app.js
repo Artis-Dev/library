@@ -13,11 +13,6 @@ if (localStorage.getItem('books') === null) {
   myLibrary = JSON.parse(booksStringFromStorage);
 }
 
-// eslint-disable-next-line func-names
-Book.prototype.info = function () {
-  return `'${this.title}' by ${this.author}, ${this.pages} pages, status: ${this.status}`;
-};
-
 function showBooks() {
   booksContainer.textContent = '';
   let readBooksCount = 0;
@@ -39,7 +34,6 @@ function showBooks() {
       readBooksPercent = Math.floor((readBooksCount / myLibrary.length) * 100);
       readBooks.textContent = `${readBooksCount} (${readBooksPercent}%)`;
     }
-
     // Unread book stats
     if (myLibrary[i].status === false) {
       unreadBooksCount += 1;
@@ -117,7 +111,6 @@ function addBookToLibrary(title, author, pages, status) {
   newBook.status = status;
   myLibrary.push(newBook);
   showBooks();
-  return `Book '${newBook.title}' has been added to the library.`;
 }
 
 function removeBookFromLibrary(event) {
@@ -143,15 +136,20 @@ function changeBookStatus(event) {
 function addDemoData() {
   addBookToLibrary('The Last Wish', 'Andrzej Sapkowski', '288', true);
   addBookToLibrary('Sword of Destiny', 'Andrzej Sapkowski', '384', true);
-  addBookToLibrary('Blood of Elves', 'Andrzej Sapkowski', '320', false);
+  addBookToLibrary('Blood of Elves', 'Andrzej Sapkowski', '320', true);
+  addBookToLibrary('Time of Contempt', 'Andrzej Sapkowski', '331', true);
+  addBookToLibrary('Baptism of Fire', 'Andrzej Sapkowski', '343', true);
+  addBookToLibrary('The Tower of the Swallow', 'Andrzej Sapkowski', '436', false);
+  addBookToLibrary('The Lady of the Lake', 'Andrzej Sapkowski', '531', false);
+  addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', '366', true);
+  addBookToLibrary('The Alchemist', 'Paulo Coelho', '182', false);
+  addBookToLibrary('On the Road', 'Jack Kerouac', '307', false);
+  addBookToLibrary('1984', 'George Orwell', '328', true);
 }
 
 function clearData() {
-  const confirmAnswer = confirm('Do you realy want to clear all books?');
-  if (confirmAnswer) {
-    myLibrary = [];
-    showBooks();
-  }
+  myLibrary = [];
+  showBooks();
 }
 
 function formValidation() {
@@ -190,12 +188,15 @@ function buttonsListeners() {
   const closeButtons = document.querySelectorAll('.close');
   const demoButton = document.querySelector('.demo-button');
   const clearButton = document.querySelector('.clear-button');
+  const confirmModal = document.querySelector('#confirm-modal');
+  const clearBooks = document.querySelector('#clear-books');
 
   // Open/close modal
   document.addEventListener('click', (event) => {
     if (event.target.className === 'card add-new' || event.target.className === 'fas fa-plus add-book-modal') {
       modal.style.display = 'block';
-    } else if (event.target === modal) {
+    } else if (event.target.className === 'modal') {
+      confirmModal.style.display = 'none';
       modal.style.display = 'none';
     }
   });
@@ -203,15 +204,21 @@ function buttonsListeners() {
   Array.from(closeButtons).forEach((button) => {
     button.addEventListener('click', () => {
       modal.style.display = 'none';
+      confirmModal.style.display = 'none';
     });
   });
   // Close/submit modal with escape/enter keys
   document.addEventListener('keyup', (event) => {
     if (event.key === 'Escape') {
       modal.style.display = 'none';
+      confirmModal.style.display = 'none';
     }
     if (event.key === 'Enter' && modal.style.display === 'block') {
       formValidation(event);
+    }
+    if (event.key === 'Enter' && confirmModal.style.display === 'block') {
+      clearData();
+      confirmModal.style.display = 'none';
     }
   });
   // Add book button
@@ -231,9 +238,14 @@ function buttonsListeners() {
   demoButton.addEventListener('click', () => {
     addDemoData();
   });
-  // Clear data button
+  // Open confirm dialog
   clearButton.addEventListener('click', () => {
+    confirmModal.style.display = 'block';
+  });
+  // Clear data button
+  clearBooks.addEventListener('click', () => {
     clearData();
+    confirmModal.style.display = 'none';
   });
 }
 

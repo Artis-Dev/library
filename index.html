@@ -19,7 +19,8 @@
     <h1>Library</h1>
     <div class="info">
       <div class="desc">
-        <p>Short description here.</p>
+        <p>This is a simple library app where you can add and delete books, change book status, see basic information and library statistics.</p>
+        <p><i class="fas fa-exclamation-triangle"></i> This app is a demo, all data is stored in <code>localStorage</code>.</p>
       </div>
       <div class="stats">
         <p><span class="bold">Read books: </span><span class="read-books"></span></p>
@@ -36,7 +37,9 @@
 
   </main>
 
-  <footer></footer>
+  <footer>
+    Built by <a href="https://github.com/Artis-Dev/" target="_blank">ArtisDev</a> | <a href="https://github.com/Artis-Dev/library/" target="_blank">Source code</a>
+  </footer>
 
   <!-- Modal -->
   <div id="new-book-modal" class="modal">
@@ -89,6 +92,21 @@
 
         </form>
 
+    </div>
+  </div>
+  <!-- /Modal -->
+
+  <!-- Confirm Modal -->
+  <div id="confirm-modal" class="modal">
+    <div class="modal-content">
+      <i class="close close-x fas fa-times"></i>
+      <h2>Clear all books</h2>
+      <div class="sep"></div>
+      <p>Do you realy want to clear all books?</p>
+      <div class="sep"></div>
+      <div class="button-right">
+        <button class="close cancel" type="button">Cancel</button><button class="clear-button" id="clear-books" type="submit" href="#">Clear books</button>
+      </div>
     </div>
   </div>
   <!-- /Modal -->
