@@ -69,10 +69,6 @@ main {
   column-gap: 16px;
   row-gap: 16px;
   margin-bottom: 40px;
-  justify-content: flex-start;
-  justify-self: flex-start;
-  align-self: flex-start;
-  align-content: flex-start;
 }
 
 .sep {

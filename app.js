@@ -1,7 +1,14 @@
 const booksContainer = document.querySelector('#books-container');
 const modal = document.querySelector('#new-book-modal');
 
-function Book() { }
+class Book {
+  constructor(title, author, pages, status) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.status = status;
+  }
+}
 
 let myLibrary = [];
 
@@ -9,8 +16,8 @@ let myLibrary = [];
 if (localStorage.getItem('books') === null) {
   myLibrary = [];
 } else {
-  const booksStringFromStorage = localStorage.getItem('books');
-  myLibrary = JSON.parse(booksStringFromStorage);
+  const booksFromStorage = JSON.parse(localStorage.getItem('books'));
+  myLibrary = booksFromStorage;
 }
 
 function showBooks() {
@@ -104,11 +111,7 @@ function showBooks() {
 }
 
 function addBookToLibrary(title, author, pages, status) {
-  const newBook = Object.create(Book.prototype);
-  newBook.title = title;
-  newBook.author = author;
-  newBook.pages = pages;
-  newBook.status = status;
+  const newBook = new Book(title, author, pages, status);
   myLibrary.push(newBook);
   showBooks();
 }
@@ -163,8 +166,8 @@ function formValidation() {
   const bookStatus = document.forms['add-book-form']['book-status'].checked;
   if (bookTitle !== '' && bookAuthor !== '' && +bookPages > 0 && +bookPages < 10000) {
     addBookToLibrary(bookTitle, bookAuthor, bookPages, bookStatus);
-    modal.style.display = 'none';
     form.reset();
+    modal.style.display = 'none';
   }
   if (bookTitle === '') {
     titleError.style.display = 'block';
