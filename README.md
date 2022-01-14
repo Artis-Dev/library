@@ -40,8 +40,9 @@ From The Odin Project's [curriculum](https://www.theodinproject.com/courses/java
 ### What I learned
 
 * Better knowledge of **Javascript** and **DOM**.
+* Better knowledge of git branching/merging.
 * Learned to add modal popups.
-* Learned to use Constraint Validation API
+* Learned to use 'Constraint Validation API'.
 * A lot of minor things.
 
 ## Author
