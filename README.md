@@ -41,6 +41,7 @@ From The Odin Project's [curriculum](https://www.theodinproject.com/courses/java
 
 * Better knowledge of **Javascript** and **DOM**.
 * Learned to add modal popups.
+* Learned to use Constraint Validation API
 * A lot of minor things.
 
 ## Author

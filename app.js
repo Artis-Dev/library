@@ -1,5 +1,12 @@
 const booksContainer = document.querySelector('#books-container');
 const modal = document.querySelector('#new-book-modal');
+const confirmModal = document.querySelector('#confirm-modal');
+const form = document.querySelector('#add-book-form');
+const bookTitle = document.forms['add-book-form']['book-title'];
+const bookAuthor = document.forms['add-book-form']['book-author'];
+const bookPages = document.forms['add-book-form']['book-pages'];
+const bookStatus = document.forms['add-book-form']['book-status'];
+const inputsArray = [bookTitle, bookAuthor, bookPages];
 
 class Book {
   constructor(title, author, pages, status) {
@@ -155,102 +162,129 @@ function clearData() {
   showBooks();
 }
 
-function formValidation() {
-  const form = document.querySelector('#add-book-form');
-  const titleError = document.querySelector('.title-error');
-  const authorError = document.querySelector('.author-error');
-  const pagesError = document.querySelector('.pages-error');
-  const bookTitle = document.forms['add-book-form']['book-title'].value;
-  const bookAuthor = document.forms['add-book-form']['book-author'].value;
-  const bookPages = document.forms['add-book-form']['book-pages'].value;
-  const bookStatus = document.forms['add-book-form']['book-status'].checked;
-  if (bookTitle !== '' && bookAuthor !== '' && +bookPages > 0 && +bookPages < 10000) {
-    addBookToLibrary(bookTitle, bookAuthor, bookPages, bookStatus);
-    form.reset();
-    modal.style.display = 'none';
+function showError(input) {
+  const errorP = input.nextElementSibling;
+  if (input.validity.valueMissing) {
+    errorP.textContent = 'This field can\'t be empty.';
+  } else if (input.validity.tooShort) {
+    errorP.textContent = `Title should be at least ${input.minLength} characters; you entered ${input.value.length}.`;
+  } else if (input === bookPages && /\D/.test(input.value)) {
+    errorP.textContent = 'Value must be a number.';
   }
-  if (bookTitle === '') {
-    titleError.style.display = 'block';
-  } else {
-    titleError.style.display = 'none';
-  }
-  if (bookAuthor === '') {
-    authorError.style.display = 'block';
-  } else {
-    authorError.style.display = 'none';
-  }
-  if (bookPages === '' || +bookPages < 0 || +bookPages > 10000) {
-    pagesError.style.display = 'block';
-  } else {
-    pagesError.style.display = 'none';
-  }
+
+  errorP.classList.add('active');
+  input.classList.add('submitted');
+  console.log('show error', input, parseInt(input.value, 10));
 }
 
-function buttonsListeners() {
-  const addBook = document.querySelector('#form-add-book');
+function resetForm() {
+  form.reset();
+  inputsArray.forEach((input) => {
+    const errorP = input.nextElementSibling;
+    errorP.textContent = '';
+    errorP.classList.remove('active');
+    input.classList.remove('submitted');
+  });
+}
+
+function listeners() {
   const closeButtons = document.querySelectorAll('.close');
   const demoButton = document.querySelector('.demo-button');
   const clearButton = document.querySelector('.clear-button');
-  const confirmModal = document.querySelector('#confirm-modal');
   const clearBooks = document.querySelector('#clear-books');
 
-  // Open/close modal
+  // Open/close modal with mouse click outside modal
   document.addEventListener('click', (event) => {
     if (event.target.className === 'card add-new' || event.target.className === 'fas fa-plus add-book-modal') {
-      modal.style.display = 'block';
-    } else if (event.target.className === 'modal') {
-      confirmModal.style.display = 'none';
-      modal.style.display = 'none';
+      modal.classList.add('active');
+    } else if (event.target.className === 'modal active') {
+      confirmModal.classList.remove('active');
+      modal.classList.remove('active');
+      resetForm();
     }
   });
-  // Close modal with buttons
+
+  // Close modal with 'X' buttons
   Array.from(closeButtons).forEach((button) => {
     button.addEventListener('click', () => {
-      modal.style.display = 'none';
-      confirmModal.style.display = 'none';
+      modal.classList.remove('active');
+      confirmModal.classList.remove('active');
+      resetForm();
     });
   });
+
   // Close/submit modal with escape/enter keys
   document.addEventListener('keyup', (event) => {
     if (event.key === 'Escape') {
-      modal.style.display = 'none';
-      confirmModal.style.display = 'none';
+      modal.classList.remove('active');
+      confirmModal.classList.remove('active');
+      resetForm();
     }
-    if (event.key === 'Enter' && modal.style.display === 'block') {
-      formValidation(event);
-    }
-    if (event.key === 'Enter' && confirmModal.style.display === 'block') {
+    if (event.key === 'Enter' && confirmModal.classList.contains('active')) {
       clearData();
-      confirmModal.style.display = 'none';
+      confirmModal.classList.remove('active');
     }
   });
-  // Add book button
-  addBook.addEventListener('click', (event) => {
-    event.preventDefault();
-    formValidation();
-  });
+
   // Remove book button
   document.addEventListener('click', (event) => {
     removeBookFromLibrary(event);
   });
+
   // Change book status
   document.addEventListener('click', (event) => {
     changeBookStatus(event);
   });
+
   // Add demo data
   demoButton.addEventListener('click', () => {
     addDemoData();
   });
+
   // Open confirm dialog
   clearButton.addEventListener('click', () => {
-    confirmModal.style.display = 'block';
+    confirmModal.classList.add('active');
   });
+
   // Clear data button
   clearBooks.addEventListener('click', () => {
     clearData();
-    confirmModal.style.display = 'none';
+    confirmModal.classList.remove('active');
+  });
+
+  // Check inputs for validity
+  inputsArray.forEach((input) => {
+    const errorP = input.nextElementSibling;
+    input.addEventListener('input', () => {
+      if (input.validity.valid || input.value === '') {
+        errorP.textContent = '';
+        errorP.classList.remove('active');
+      } else {
+        showError(input);
+      }
+    });
+  });
+
+  // Submit form with checks for errors
+  form.addEventListener('submit', (event) => {
+    if (!bookTitle.validity.valid) {
+      showError(bookTitle);
+
+      event.preventDefault();
+    } if (!bookAuthor.validity.valid) {
+      showError(bookAuthor);
+      event.preventDefault();
+    } if (!bookPages.validity.valid) {
+      showError(bookPages);
+      event.preventDefault();
+    } if (bookTitle.validity.valid && bookTitle.validity.valid && bookPages.validity.valid) {
+      addBookToLibrary(bookTitle.value, bookAuthor.value, bookPages.value, bookStatus.checked);
+      resetForm();
+      event.preventDefault();
+      modal.classList.remove('active');
+    }
   });
 }
 
 showBooks();
-buttonsListeners();
+listeners();

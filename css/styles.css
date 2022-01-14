@@ -324,13 +324,33 @@ input[type=number] {
 }
 
 /* Form errors */
-.title-error,
-.author-error,
-.pages-error {
+.error {
   display: none;
   margin: 6px 0 0;
   font-size: 14px;
   color: #D56062;
+}
+
+.active {
+  display: block;
+}
+
+#form-book-title:not(:placeholder-shown):invalid,
+#form-book-author:not(:placeholder-shown):invalid,
+#form-book-pages:not(:placeholder-shown):invalid  {
+  border-color: #D56062;
+}
+
+#form-book-title.submitted,
+#form-book-author.submitted,
+#form-book-pages.submitted {
+  border-color: #D56062;
+}
+
+#form-book-title:not(:placeholder-shown):valid,
+#form-book-author:not(:placeholder-shown):valid,
+#form-book-pages:not(:placeholder-shown):valid  {
+  border-color: #519E8A;
 }
 
 /* Checkbox styling */
