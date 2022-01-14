@@ -174,7 +174,6 @@ function showError(input) {
 
   errorP.classList.add('active');
   input.classList.add('submitted');
-  console.log('show error', input, parseInt(input.value, 10));
 }
 
 function resetForm() {
